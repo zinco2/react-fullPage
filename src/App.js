@@ -21,12 +21,12 @@ class App extends Component {
             ],
             offsetheight:document.documentElement.clientHeight,    //获取当前页面的高度
             fullPage:0,           //当前在第几页
-            fullPageNum:false,        //是否在滑动
+            fullPageNum:false        //是否在滑动
         }
     }
     componentDidMount(){
         //
-        //在元素加载完毕的时候添加鼠标滑动事件
+        //添加鼠标滑动事件
         //
         if(document.addEventListener){
             document.addEventListener('DOMMouseScroll',this.scroll.bind(this),false);
@@ -45,8 +45,7 @@ class App extends Component {
     //鼠标事件
     //
     scroll(e){
-        console.log(e)
-        e=e || window.event;
+        let event = e || window.event;
         //
         //是否正在滑动
         //
@@ -56,18 +55,18 @@ class App extends Component {
         //
         //   e.wheelDelta为负数时向下滑动
         //
-        if(e.wheelDelta<0){
+        if(event.wheelDelta<0){
             if(this.state.fullPage>=3){
-                return false
+                return false;
             }
-            this.setState({fullPageNum:true})
+            this.setState({fullPageNum:true});
             this.pageInfo(this.state.fullPage+1);
             //
             //  css设置动画事件为1000，所以等到1000ms后滚动状态为false
             //
             setTimeout(()=>{
-                this.setState({fullPageNum:false})
-            },1000)
+                this.setState({fullPageNum:false});
+            },1000);
         //
         //   否则就是向上划
         //
@@ -75,7 +74,7 @@ class App extends Component {
             if(this.state.fullPage<=0){
                 return false;
             }
-            this.setState({fullPageNum:true})
+            this.setState({fullPageNum:true});
             this.pageInfo(this.state.fullPage-1);
             setTimeout(()=>{
                 this.setState({fullPageNum:false})
@@ -88,7 +87,7 @@ class App extends Component {
             return <div key={index} style={{'height':this.state.offsetheight+'px','background':i.bg}}></div>
         })
         let fullList=this.state.bannerList.map((i,index)=>{
-            return <div key={index} className={this.state.fullPage==index?'color':''} onClick={this.pageInfo.bind(this,index)}></div>
+            return <div key={index} className={this.state.fullPage===index?'color':''} onClick={this.pageInfo.bind(this,index)}></div>
         })
         return (
             <div className="section" style={{'height':this.state.offsetheight+'px'}}>
