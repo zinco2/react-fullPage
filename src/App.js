@@ -35,6 +35,7 @@ class App extends Component {
          */
         this.addEvent(box,'mousewheel',this.scroll.bind(this));
         this.addEvent(box,'DOMMouseScroll',this.scroll.bind(this));
+        console.log(box)
     }
     /*
         addeventlistener兼容事件
@@ -98,11 +99,13 @@ class App extends Component {
     }
 
     render() {
-        let fullPage = this.state.bannerList.map((i, index) => {
-            return <div key={index} style={{'height':this.state.offsetheight+'px','background':i.bg}}></div>
+        let fullPage = [];
+        this.state.bannerList.forEach((i, index) => {
+            fullPage.push(<div key={index} style={{'height':this.state.offsetheight+'px','background':i.bg}}></div>)
         })
-        let fullList = this.state.bannerList.map((i, index) => {
-            return <div key={index} className={this.state.fullPage===index?'color':''} onClick={this.pageInfo.bind(this,index)}></div>
+        let fullList = [];
+        this.state.bannerList.forEach((i, index) => {
+            fullList.push(<div key={index} className={this.state.fullPage===index?'color':''} onClick={this.pageInfo.bind(this,index)}></div>)
         })
         return (
             <div className="section" style={{'height':this.state.offsetheight+'px'}}>
